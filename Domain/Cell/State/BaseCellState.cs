@@ -9,7 +9,7 @@ public abstract class BaseCellState : ICellState
         Context = context;
     }
     
-    public virtual void SetFixedValue(int value)
+    public virtual void SetFixedValue(int? value)
     {
         Context.FixedValue = value;
     }

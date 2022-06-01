@@ -6,7 +6,7 @@ public class EmptyCellState : BaseCellState
     {
     }
 
-    public override void SetFixedValue(int value)
+    public override void SetFixedValue(int? value)
     {
         if (value > 0)
         {

@@ -6,7 +6,7 @@ public class CorrectCellState : BaseCellState
     {
     }
 
-    public override void SetFixedValue(int value)
+    public override void SetFixedValue(int? value)
     {
         //A correct cell should not change its fixed value
     }

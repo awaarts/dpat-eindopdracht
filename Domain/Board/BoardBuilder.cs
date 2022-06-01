@@ -1,14 +1,17 @@
 using System.Text.RegularExpressions;
+using DPAT_eindopdracht.Domain.Cell;
 
 namespace DPAT_eindopdracht.Domain.Board;
 
 public class BoardBuilder
 {
     private IBoard board;
+    private CellFactory _cellFactory;
 
     public BoardBuilder()
     {
         board = new Board();
+        _cellFactory = new CellFactory();
     }
     
     public void CreateBoard()

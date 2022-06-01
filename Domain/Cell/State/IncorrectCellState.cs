@@ -6,16 +6,9 @@ public class IncorrectCellState : BaseCellState
     {
     }
 
-    public override void SetFixedValue(int value)
+    public override void SetFixedValue(int? value)
     {
-        if (value > 0)
-        {
-            Context.FixedValue = value;
-        }
-        else
-        {
-            Context.FixedValue = null;
-        }
+        Context.FixedValue = value > 0 ? value : null;
         Context.SetState("empty");
     }
 }

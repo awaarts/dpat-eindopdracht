@@ -1,0 +1,7 @@
+<table class="board">
+	<tr *ngFor="let row of board.cells; let x = index">
+		<td *ngFor="let cell of row; let y = index" [ngClass]="{'borderTop' : board.getRegionCell(x,y).topBorder, 'borderLeft' : board.getRegionCell(x,y).leftBorder,'borderBottom' : board.getRegionCell(x,y).bottomBorder,'borderRight' : board.getRegionCell(x,y).rightBorder }">
+			<app-cell [cell]="cell"></app-cell>
+		</td>
+	</tr>
+</table>

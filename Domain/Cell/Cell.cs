@@ -7,7 +7,7 @@ public class Cell
 {
     public ICellState CellState { get; private set; }
     public int? FixedValue { get; set; }
-    public int HelperValue { get; set; }
+    public int? HelperValue { get; set; }
 
     public Cell(ICellState? state)
     {
@@ -41,6 +41,10 @@ public class Cell
         CellState.SetFixedValue(value);
         //set value through state, as this will allow us to check if we are not overriding correct values
     }
-    
+
+    public void SetHelperValue(int? value)
+    {
+        CellState.SetHelperValue(value);
+    }
     
 }

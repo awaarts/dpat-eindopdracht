@@ -14,7 +14,7 @@ public class EmptyCellState : BaseCellState
         }
     }
 
-    public override void SetHelperValue(int helperValue)
+    public override void SetHelperValue(int? helperValue)
     {
         if (helperValue > 0)
         {

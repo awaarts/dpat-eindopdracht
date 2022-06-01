@@ -10,4 +10,12 @@ public class CorrectCellState : BaseCellState
     {
         //A correct cell should not change its fixed value
     }
+
+    public override void SetHelperValue(int? helperValue)
+    {
+        if (helperValue > 0)
+        {
+            base.SetHelperValue(helperValue);
+        }
+    }
 }

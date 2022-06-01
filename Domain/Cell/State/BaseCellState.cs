@@ -14,7 +14,7 @@ public abstract class BaseCellState : ICellState
         Context.FixedValue = value;
     }
 
-    public virtual void SetHelperValue(int helperValue)
+    public virtual void SetHelperValue(int? helperValue)
     {
         Context.HelperValue = helperValue;
     }

@@ -11,4 +11,12 @@ public class IncorrectCellState : BaseCellState
         Context.FixedValue = value > 0 ? value : null;
         Context.SetState("empty");
     }
+    
+    public override void SetHelperValue(int? helperValue)
+    {
+        if (helperValue > 0)
+        {
+            base.SetHelperValue(helperValue);
+        }
+    }
 }

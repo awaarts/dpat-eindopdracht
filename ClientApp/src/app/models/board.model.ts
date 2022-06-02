@@ -3,7 +3,7 @@ import { RegionCell } from "./region.cell.model";
 import { Region } from "./region.model";
 
 class Board {
-  cells : any[][] = [];
+  cells : Cell[][] = [];
   regions : Region[] = [];
 
   public getRegionCell(x: number, y: number) {

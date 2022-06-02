@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { CellComponent } from './components/cell/cell.component';
-import { BoardComponent } from './components/board/board.component';
+import { BoardComponent } from './pages/board/board.component';
 
 @NgModule({
   declarations: [

@@ -9,7 +9,6 @@ class Region {
   }
 
   setCellBorders() {
-
     let maxX = Math.max(...this.cells.map(cell => cell.x));
     let minX = Math.min(...this.cells.map(cell => cell.x));
     let minY = Math.min(...this.cells.map(cell => cell.y));

@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { CellComponent } from './components/cell/cell.component';
-import { BoardComponent } from './pages/board/board.component';
+import { BoardComponent } from './components/board/board.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CellComponent,
     BoardComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

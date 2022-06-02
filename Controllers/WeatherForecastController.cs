@@ -3,7 +3,7 @@
 namespace DPAT_eindopdracht.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[_controller]")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]

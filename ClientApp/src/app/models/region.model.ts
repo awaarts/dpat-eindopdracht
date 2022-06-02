@@ -9,24 +9,35 @@ class Region {
   }
 
   setCellBorders() {
+
     let maxX = Math.max(...this.cells.map(cell => cell.x));
     let minX = Math.min(...this.cells.map(cell => cell.x));
     let minY = Math.min(...this.cells.map(cell => cell.y));
     let maxY = Math.max(...this.cells.map(cell => cell.y));
 
-      let bottomCells = this.cells.filter(cell => cell.x == maxX);
-      bottomCells.forEach(cell => cell.bottomBorder = true);
+    console.log(maxX, minX, minY, maxY)
 
-      let topCells = this.cells.filter(cell => cell.x == minX);
-      topCells.forEach(cell => cell.topBorder = true);
+    for(let row = minY; row <= maxY; row++ ) {
 
+      let cells = this.cells.filter(cell => cell.y == row)
 
-    let rightCells = this.cells.filter(cell => cell.y == maxY);
-    rightCells.forEach(cell => cell.rightBorder = true);
+      let minRowX = Math.min(...cells.map(cell => cell.x));
+      let maxRowX = Math.max(...cells.map(cell => cell.x));
 
-    let leftCells = this.cells.filter(cell => cell.y == minY);
-    leftCells.forEach(cell => cell.leftBorder = true);
+      cells.filter(cell => cell.x == minRowX)[0].leftBorder = true;
+      cells.filter(cell => cell.x == maxRowX)[0].rightBorder = true;
+    }
 
+    for(let col = minX; col <= maxX; col++ ) {
+
+      let cells = this.cells.filter(cell => cell.x == col)
+
+      let minColY = Math.min(...cells.map(cell => cell.y));
+      let maxColY = Math.max(...cells.map(cell => cell.y));
+
+      cells.filter(cell => cell.y == minColY)[0].topBorder = true;
+      cells.filter(cell => cell.y == maxColY)[0].bottomBorder = true;
+    }
   }
 
   public getCell(x: number, y:number) {

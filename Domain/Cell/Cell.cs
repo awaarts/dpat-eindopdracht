@@ -22,7 +22,9 @@ public class Cell
     }
     public Cell Clone()
     {
-        return new Cell(CellState);
+        Cell clone = new Cell(null);
+        clone.SetState(CellState.ToString());
+        return clone;
     }
 
     public void SetState(string state)

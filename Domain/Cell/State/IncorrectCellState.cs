@@ -19,4 +19,9 @@ public class IncorrectCellState : BaseCellState
             base.SetHelperValue(helperValue);
         }
     }
+    
+    public override string ToString()
+    {
+        return "incorrect";
+    }
 }

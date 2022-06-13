@@ -1,8 +1,9 @@
 using DPAT_eindopdracht.Domain.Board;
+using DPAT_eindopdracht.Domain.Cell;
 
 namespace DPAT_eindopdracht.Application.Services.Import;
 
 public interface IImportService
 {
-    public Board loadSudoku(FileStream file);
+    public Cell[][] LoadSudoku(IFormFile file);
 }

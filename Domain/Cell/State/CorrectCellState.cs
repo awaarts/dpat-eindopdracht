@@ -8,6 +8,7 @@ public class CorrectCellState : BaseCellState
 
     public override void SetFixedValue(int? value)
     {
+        Context.FixedValue ??= value;
         //A correct cell should not change its fixed value
     }
 
@@ -17,5 +18,9 @@ public class CorrectCellState : BaseCellState
         {
             base.SetHelperValue(helperValue);
         }
+    }
+    public override string ToString()
+    {
+        return "correct";
     }
 }

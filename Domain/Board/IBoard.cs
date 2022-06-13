@@ -7,5 +7,12 @@ public interface IBoard
           get;
      }
 
+     List<Group.Group> Groups
+     {
+         get;
+     }
+
+     public void SetCells(Cell.Cell[][] cells);
+     public void AddGroup(Group.Group group);
      public bool Validate();
 }

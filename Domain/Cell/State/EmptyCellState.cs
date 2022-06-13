@@ -21,4 +21,9 @@ public class EmptyCellState : BaseCellState
             base.SetHelperValue(helperValue);
         }
     }
+
+    public override string ToString()
+    {
+        return "empty";
+    }
 }

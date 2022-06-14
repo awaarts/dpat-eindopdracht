@@ -2,8 +2,10 @@ namespace DPAT_eindopdracht.Domain.Cell.State;
 
 public class EmptyCellState : BaseCellState
 {
+    public override string state { get;  }
     public EmptyCellState(Cell context) : base(context)
     {
+        state = "empty";
     }
 
     public override void SetFixedValue(int? value)
@@ -20,10 +22,5 @@ public class EmptyCellState : BaseCellState
         {
             base.SetHelperValue(helperValue);
         }
-    }
-
-    public override string ToString()
-    {
-        return "empty";
     }
 }

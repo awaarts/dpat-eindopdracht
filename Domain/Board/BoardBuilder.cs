@@ -20,9 +20,16 @@ public class BoardBuilder
         _groupFactory.AddGroupType(typeof(UniqueGroup), "unique");
     }
     
-    public void CreateBoard()
+    public void CreateBoard(int width, int length)
     {
         _board = new Board();
+        Cell.Cell[][] cells = new Cell.Cell[length][];
+        for (int i = 0; i < length; i++)
+        {
+            cells[i] = new Cell.Cell[width];
+        }
+
+        _board.SetCells(cells);
     }
 
     public IBoard GetBoard()
@@ -30,14 +37,14 @@ public class BoardBuilder
         return _board;
     }
     
-    public void AddCells(Cell.Cell[][] cells)
+    public void SetCell(int x, int y, Cell.Cell cell)
     {
-        _board.SetCells(cells);
+        _board.Cells[y][x] = cell;
     }
     
-    public void AddGroup(Group.Group group)
+    public void AddGroup(string type, List<Cell.Cell> cells)
     {
-        _board.AddGroup(group);
+        _board.AddGroup(_groupFactory.CreateGroup(type, cells));
     }
     
     public void AddBoards(List<Board> boards)
@@ -48,78 +55,102 @@ public class BoardBuilder
 
         _board = newBoard;
     }
-
-    private List<Group.Group> CreateHorizontalGroups(Cell.Cell[][] cells, int verticalLength)
+    
+    private void CreateCells(int[][] cellValues)
     {
-        var groups = new List<Group.Group>();
-        for (var i = 0; i < verticalLength; i++)
+        for (var y = 0; y < cellValues.Length; y++)
         {
-            var group = _groupFactory.CreateGroup("unique", cells[i].ToList());
-            groups.Add(group);
-        }
+            for (var x = 0; x < cellValues[y].Length; x++)
+            {
+                Cell.Cell cell = _cellFactory.CreateCell("empty");
+                if (cellValues[y][x] > 0)
+                {
+                    cell.SetFixedValue(cellValues[y][x]);
+                    cell.SetState("correct");
+                }
 
-        return groups;
+                _board.Cells[y][x] = cell;
+            }
+        }
     }
     
-    private List<Group.Group> CreateVerticalGroups(Cell.Cell[][] cells, int verticalLength, int horizontalLength)
+    private void CreateRegionGroup(string type)
     {
-        var groups = new List<Group.Group>();
-        for (var column = 0; column < horizontalLength; column++)
+        var cells = new List<Cell.Cell>();
+        for (var y = 0; y < _board.Cells.Length; y++)
         {
-            var cellLine = new List<Cell.Cell>();
-            for (var row = 0; row < verticalLength; row++)
+            for (var x = 0; x < _board.Cells[y].Length; x++)
             {
-                cellLine.Add(cells[row][column]);
+                cells.Add(_board.Cells[y][x]);
+            }
+        }
+        
+        AddGroup(type, cells);
+    }
+
+    private void CreateHorizontalGroups(string type)
+    {
+        for (var y = 0; y < _board.Cells.Length; y++)
+        {
+            List<Cell.Cell> cells = new List<Cell.Cell>();
+            
+            for (var x = 0; x < _board.Cells[y].Length; x++)
+            {
+                cells.Add(_board.Cells[y][x]);
             }
             
-            var group = _groupFactory.CreateGroup("unique", cellLine);
-            groups.Add(group);
+            AddGroup(type, cells);
         }
-
-        return groups;
     }
     
-    private Group.Group CreateRegionGroup(Cell.Cell[][] cells)
+    private void CreateVerticalGroups(string type)
     {
-        return _groupFactory.CreateGroup("unique", cells.SelectMany(cellRow => cellRow).ToList());
-    }
-
-    public void Prepare4X4(Cell.Cell[][] cells)
-    {
-
-        //check if we have been given the correct format
-        if (cells.Length == 4 && cells[3].Length == 4)
+        for (var x = 0; x < _board.Cells[0].Length; x++)
         {
-            CreateBoard();
-            CreateHorizontalGroups(cells, 4).ForEach(AddGroup);
-            CreateVerticalGroups(cells, 4, 4).ForEach(AddGroup);
-            AddGroup(CreateRegionGroup(cells));
-            Console.Write(_board.Groups.Count);
-            AddCells(cells);
+            List<Cell.Cell> cells = new List<Cell.Cell>();
+            
+            for (var y = 0; y < _board.Cells.Length; y++)
+            {
+                cells.Add(_board.Cells[y][x]);
+            }
+            
+            AddGroup(type, cells);
         }
     }
 
-    public void Prepare6X6(Cell.Cell[][] cells)
+    public void Prepare4X4(int[][] cellValues)
     {
         //check if we have been given the correct format
-        if (cells.Length == 6 && cells[5].Length == 6)
-        {
-            CreateBoard();
-            CreateHorizontalGroups(cells, 6).ForEach(AddGroup);
-            CreateVerticalGroups(cells, 6, 6).ForEach(AddGroup);
-            AddGroup(CreateRegionGroup(cells));
-        }
+        if (cellValues.Length != 4 || cellValues[3].Length != 4) return;
+        
+        CreateBoard(4, 4);
+        CreateCells(cellValues);
+        CreateRegionGroup("unique");
+        CreateHorizontalGroups("unique");
+        CreateVerticalGroups("unique");
     }
 
-    public void Prepare9X9(Cell.Cell[][] cells)
+    public void Prepare6X6(int[][] cellValues)
     {
         //check if we have been given the correct format
-        if (cells.Length == 9 && cells[8].Length == 9)
-        {
-            CreateBoard();
-            CreateHorizontalGroups(cells, 9).ForEach(AddGroup);
-            CreateVerticalGroups(cells, 9, 9).ForEach(AddGroup);
-            AddGroup(CreateRegionGroup(cells));
-        }
+        if (cellValues.Length != 6 || cellValues[5].Length != 6) return;
+        
+        CreateBoard(6, 6);
+        CreateCells(cellValues);
+        CreateRegionGroup("unique");
+        CreateHorizontalGroups("unique");
+        CreateVerticalGroups("unique");
+    }
+
+    public void Prepare9X9(int[][] cellValues)
+    {
+        //check if we have been given the correct format
+        if (cellValues.Length != 9 || cellValues[8].Length != 9) return;
+        
+        CreateBoard(9, 9);
+        CreateCells(cellValues);
+        CreateRegionGroup("unique");
+        CreateHorizontalGroups("unique");
+        CreateVerticalGroups("unique");
     }
 }

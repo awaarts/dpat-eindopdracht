@@ -2,8 +2,10 @@ namespace DPAT_eindopdracht.Domain.Cell.State;
 
 public class IncorrectCellState : BaseCellState
 {
+    public override string state { get;  }
     public IncorrectCellState(Cell context) : base(context)
     {
+        state = "incorrect";
     }
 
     public override void SetFixedValue(int? value)
@@ -18,10 +20,5 @@ public class IncorrectCellState : BaseCellState
         {
             base.SetHelperValue(helperValue);
         }
-    }
-    
-    public override string ToString()
-    {
-        return "incorrect";
     }
 }

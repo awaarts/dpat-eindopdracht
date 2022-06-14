@@ -5,5 +5,5 @@ namespace DPAT_eindopdracht.Application.Services.Import;
 
 public interface IImportService
 {
-    public Cell[][] LoadSudoku(IFormFile file);
+    public IBoard LoadSudoku(IFormFile file);
 }

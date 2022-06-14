@@ -10,28 +10,20 @@ namespace DPAT_eindopdracht.Application.Controllers;
 [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
 public class GameController : ControllerBase
 {
-    private SudokuSolverService _sudokuSolverService;
-    private Dictionary<string, IImportService> _importServices;
-    private string[] _acceptedFileExtensions;
     private BoardBuilder _boardBuilder;
+    private SudokuSolverService _sudokuSolverService;
+    private ImportService _importService;
+    private string[] _acceptedFileExtensions;
 
     public GameController()
     {
         _boardBuilder = new BoardBuilder();
+        _importService = new ImportService(_boardBuilder);
         // this._sudokuSolverService = new SudokuSolverService();
         _acceptedFileExtensions = new[] { ".samurai", ".jigsaw", ".9x9", ".6x6", ".4x4" };
-        SetupImportServices();
-    }
-
-    private void SetupImportServices()
-    {
-        this._importServices = new Dictionary<string, IImportService>()
-        {
-            {".4x4", new ImportService4X4()} 
-        };
     }
     
-    [HttpPost, Microsoft.AspNetCore.Mvc.Route("board"), DisableRequestSizeLimit]
+    [HttpPost, DisableRequestSizeLimit]
     public IBoard? LoadGame([FromForm]IFormFile file)
     {
         if (file != null && _acceptedFileExtensions.Contains(Path.GetExtension(file.FileName).ToLower()))
@@ -44,23 +36,16 @@ public class GameController : ControllerBase
 
     private IBoard ImportFile(IFormFile file)
     {
-        _boardBuilder.CreateBoard();
-        
-        var cells = _importServices[Path.GetExtension(file.FileName).ToLower()].LoadSudoku(file);
-        switch (Path.GetExtension(file.FileName).ToLower())
-        {
-            case ".4x4":
-                _boardBuilder.Prepare4X4(cells);
-                break;
-        }
-        return _boardBuilder.GetBoard();
+        return _importService.LoadSudoku(file);
     }
     
+    [HttpPost, Route("board/solve")]
     public IBoard SolveSudoku(IBoard board)
     {
         return _sudokuSolverService.SolveSudoku(board);
     }
     
+    [HttpPost, Route("board/check")]
     public IBoard CheckSudoku(IBoard board)
     {
         IBoard oldBoard = board;
@@ -70,8 +55,10 @@ public class GameController : ControllerBase
         throw new NotImplementedException();
     }
 
-    public Cell UpdateCell(Cell cell)
+    [HttpPost, Route("cell")]
+    public Cell? UpdateCell([FromBody] Cell cell)
     {
+        // return cell;
         return cell;
     }
 }

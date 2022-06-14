@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -9,18 +9,28 @@ import {HttpClient} from "@angular/common/http";
 export class MenuComponent implements OnInit {
   private http: HttpClient;
   private baseUrl: string;
-  test: any;
+
+  @Output() newBoardLoaded = new EventEmitter<string>();
 
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') url: string) {
     this.http = httpClient;
     this.baseUrl = url;
   }
 
-  ngOnInit(): void {
-    this.http.get<string>(this.baseUrl + 'api/game').subscribe(result => {
-      console.log('hello', result)
-      this.test = result;
+  loadFile(event: any) {
+    const formData = new FormData();
+    formData.append("file", event.target.files[0]);
+    this.http.post<string>(
+      this.baseUrl + 'api/game',
+      formData
+    ).subscribe(result => {
+      this.newBoardLoaded.emit(result)
+    }, error => {
+      console.log(error)
     });
+  }
+
+  ngOnInit(): void {
   }
 
 }

@@ -1,4 +1,4 @@
-<app-menu></app-menu>
+<app-menu (newBoardLoaded)="newBoardLoaded($event)" ></app-menu>
 <div class="d-flex justify-content-center align-items-center h-100">
-	<app-board></app-board>
+	<app-board [board]="board"></app-board>
 </div>

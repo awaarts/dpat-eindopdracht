@@ -5,8 +5,8 @@ namespace DPAT_eindopdracht.Domain.Group;
 
 public class Group
 {
-    private List<IValidator> validators;
-    private List<Cell.Cell> cells;
+    public List<IValidator> validators { get; }
+    public List<Cell.Cell> cells { get; }
 
     public Group(List<Cell.Cell> cells)
     {

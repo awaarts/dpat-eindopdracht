@@ -20,7 +20,12 @@ public class Board : IBoard
     {
         this.Groups.Add(group);
     }
-    
+
+    public void AddBoard(IBoard board)
+    {
+        throw new Exception("Can't create board inside board");
+    }
+
     public bool Validate()
     {
         return Groups.All(group => group.Validate());

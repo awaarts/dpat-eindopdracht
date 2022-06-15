@@ -12,7 +12,9 @@ public class ImportService
         {
             { ".4x4", new ImportService4X4(boardBuilder) },
             { ".6x6", new ImportService6X6(boardBuilder) },
-            { ".9x9", new ImportService9X9(boardBuilder) }
+            { ".9x9", new ImportService9X9(boardBuilder) },
+            { ".jigsaw", new ImportServiceJigsaw(boardBuilder) },
+            { ".samurai", new ImportServiceSamurai(boardBuilder)}
         };
     }
 

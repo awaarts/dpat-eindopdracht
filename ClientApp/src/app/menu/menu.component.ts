@@ -21,7 +21,7 @@ export class MenuComponent implements OnInit {
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
     this.http.post<string>(
-      this.baseUrl + 'api/game',
+      this.baseUrl + 'api/game/new',
       formData
     ).subscribe(result => {
       this.newBoardLoaded.emit(result)

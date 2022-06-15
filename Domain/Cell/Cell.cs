@@ -10,6 +10,9 @@ public class Cell
     public int? FixedValue { get; set; }
     public int? HelperValue { get; set; }
     
+    public int x { get; set; }
+    public int y { get; set; }
+    
     //only used to properly initialise model from controller
     public string? jsonState { get; }
 

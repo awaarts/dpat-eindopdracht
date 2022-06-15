@@ -14,10 +14,11 @@ public class GroupFactory
         _groupTypes[typeName] = groupType;
     }
 
-    public Group CreateGroup(string type, List<Cell.Cell> cells)
+    public Group CreateGroup(string validator, List<Cell.Cell> cells, string type)
     {
-        Type groupType = _groupTypes[type];
-        Group? group = (Group?) Activator.CreateInstance(groupType, cells);
+        Type groupValidator = _groupTypes[validator];
+        Group? group = (Group?) Activator.CreateInstance(groupValidator, cells);
+        group.type = type;
         return group ?? new Group(cells);
     }
 }

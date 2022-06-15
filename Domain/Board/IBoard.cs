@@ -14,5 +14,7 @@ public interface IBoard
 
      public void SetCells(Cell.Cell[][] cells);
      public void AddGroup(Group.Group group);
+
+     public void AddBoard(IBoard board);
      public bool Validate();
 }

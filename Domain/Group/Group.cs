@@ -7,6 +7,8 @@ public class Group
 {
     public List<IValidator> validators { get; }
     public List<Cell.Cell> cells { get; }
+    
+    public string type { get; set; }
 
     public Group(List<Cell.Cell> cells)
     {

@@ -6,6 +6,7 @@ class Board {
   cells : Cell[][] = [];
   regions : Region[] = [];
 
+
   public getRegionCell(x: number, y: number) {
     for(let i = 0; i < this.regions.length; i++) {
       let region = this.regions[i]
@@ -15,6 +16,10 @@ class Board {
       }
     }
     return new RegionCell(-1,-1);
+  }
+
+  public setCellBorders() {
+    this.regions.forEach(region => region.setCellBorders())
   }
 }
 

@@ -43,7 +43,7 @@ public class ImportServiceSamurai : IImportService
             boardCells[i] = cells;
         }
 
-        _boardBuilder.prepareSamurai(boardCells);
+        _boardBuilder.PrepareSamurai(boardCells);
         return _boardBuilder.GetBoard();
     }
 }

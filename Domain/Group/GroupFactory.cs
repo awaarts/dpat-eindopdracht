@@ -2,23 +2,26 @@ namespace DPAT_eindopdracht.Domain.Group;
 
 public class GroupFactory
 {
-    private Dictionary<string, Type> _groupTypes;
+    private readonly Dictionary<Group.GroupTypes, Type> _groupTypes;
 
     public GroupFactory()
     {
-        _groupTypes = new Dictionary<string, Type>();
+        _groupTypes = new Dictionary<Group.GroupTypes, Type>();
     }
 
-    public void AddGroupType(Type groupType, string typeName)
+    public void AddGroupType(Type type, Group.GroupTypes groupType)
     {
-        _groupTypes[typeName] = groupType;
+        _groupTypes[groupType] = type;
     }
 
-    public Group CreateGroup(string validator, List<Cell.Cell> cells, string type)
+    public Group? CreateGroup(Group.GroupTypes groupType, List<Cell.Cell> cells, string type)
     {
-        Type groupValidator = _groupTypes[validator];
-        Group? group = (Group?) Activator.CreateInstance(groupValidator, cells);
-        group.type = type;
-        return group ?? new Group(cells);
+        var groupValidator = _groupTypes[groupType];
+        var group = (Group?) Activator.CreateInstance(groupValidator, cells);
+        if (group != null)
+        {
+            group.Type = type;
+        }
+        return group;
     }
 }

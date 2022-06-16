@@ -30,6 +30,16 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  getCorrectBoard() {
+    this.http.get<string>(
+      this.baseUrl + 'api/game/board/solve'
+  ).subscribe(result => {
+      this.newBoardLoaded.emit(result);
+    }, error => {
+      console.log(error)
+    })
+}
+
   ngOnInit(): void {
   }
 

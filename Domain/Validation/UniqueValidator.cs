@@ -5,7 +5,7 @@ public class UniqueValidator : IValidator
     public bool Validate(List<Cell.Cell> cells)
     {
         var numbersPresent = new List<int>();
-        var isValid = true;
+        var isValid = true;  
         cells.ForEach(cell =>
         {
             if (cell.FixedValue != null)

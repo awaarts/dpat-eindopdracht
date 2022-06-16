@@ -5,7 +5,7 @@ namespace DPAT_eindopdracht.Application;
 
 public static class BoardRepository
 {
-    private static IBoard _board;
+    private static IBoard _board = new Board();
 
     public static void SetBoard(IBoard board)
     {

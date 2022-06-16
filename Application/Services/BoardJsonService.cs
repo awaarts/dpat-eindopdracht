@@ -24,7 +24,7 @@ public class BoardJsonService
                 foreach (Cell cell in row)
                 {
                     y++;
-                    foreach (Cell cell2 in group.cells)
+                    foreach (Cell cell2 in group.Cells)
                     {
                         if (cell == cell2)
                         {

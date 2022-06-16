@@ -6,6 +6,6 @@ public class UniqueGroup : Group
 {
     public UniqueGroup(List<Cell.Cell> cells) : base(cells)
     {
-        this.AddValidator(new UniqueValidator());
+        AddValidator(new UniqueValidator());
     }
 }

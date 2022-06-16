@@ -9,15 +9,22 @@
 .notes {
   position: absolute;
   top:0px;
+  margin-left: 3px;
   font-size:10px;
+  z-index: 1;
 }
 
 .notes span {
 
 }
 
-.correct {
+.initial {
   background-color:lightgray;
+}
+
+.incorrect {
+  background-color: #FEE;
+  color: #ff3c3c;
 }
 
 input {

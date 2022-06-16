@@ -1,14 +1,13 @@
+using DPAT_eindopdracht.Application.Algorithms;
 using DPAT_eindopdracht.Application.Services;
 using DPAT_eindopdracht.Application.Services.Import;
 using DPAT_eindopdracht.Domain.Board;
-using DPAT_eindopdracht.Domain.Cell;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace DPAT_eindopdracht.Application.Controllers;
 
 [ApiController]
-[Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+[Route("api/[controller]")]
 public class GameController : ControllerBase
 {
     private BoardBuilder _boardBuilder;
@@ -22,7 +21,7 @@ public class GameController : ControllerBase
         _boardBuilder = new BoardBuilder();
         _boardJsonService = new BoardJsonService();
         _importService = new ImportService(_boardBuilder);
-        // this._sudokuSolverService = new SudokuSolverService();
+        this._sudokuSolverService = new SudokuSolverService(new SudokuAlgorithm());
         _acceptedFileExtensions = new[] { ".samurai", ".jigsaw", ".9x9", ".6x6", ".4x4" };
     }
     
@@ -51,10 +50,10 @@ public class GameController : ControllerBase
         return board;
     }
     
-    [HttpPost, Route("board/solve")]
-    public IBoard SolveSudoku(IBoard board)
+    [HttpGet, Route("board/solve")]
+    public IBoard SolveSudoku()
     {
-        return _sudokuSolverService.SolveSudoku(board);
+        return _sudokuSolverService.SolveSudoku(BoardRepository.GetBoard());
     }
     
     [HttpGet, Route("board/check")]
@@ -68,7 +67,18 @@ public class GameController : ControllerBase
     {
         IBoard board = BoardRepository.GetBoard();
         
-        board.UpdateCell(x,y,newValue);
+        board.UpdateCell(x,y,newValue < 0 ? null : newValue);
+        BoardRepository.SetBoard(board);
+
+        return board;
+    }
+    
+    [HttpPost, Route("helpervalue")]
+    public IBoard UpdateHelperValue(int x, int y, int newValue)
+    {
+        IBoard board = BoardRepository.GetBoard();
+        
+        board.UpdateHelperValue(x,y,newValue < 0 ? null : newValue);
         BoardRepository.SetBoard(board);
 
         return board;

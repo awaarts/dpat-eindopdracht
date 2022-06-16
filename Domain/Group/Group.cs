@@ -1,31 +1,35 @@
 using DPAT_eindopdracht.Domain.Validation;
-using DPAT_eindopdracht.Domain.Cell;
 
 namespace DPAT_eindopdracht.Domain.Group;
 
 public class Group
 {
-    public List<IValidator> validators { get; }
-    public List<Cell.Cell> cells { get; }
+    public enum GroupTypes
+    {
+        Unique
+    }
+    public List<IValidator> Validators { get; }
+    public List<Cell.Cell> Cells { get; }
     
-    public string type { get; set; }
+    public string Type { get; set; }
 
     public Group(List<Cell.Cell> cells)
     {
-        validators = new List<IValidator>();
-        this.cells = cells;
+        Type = "";
+        Validators = new List<IValidator>();
+        this.Cells = cells;
     }
 
-    protected void AddValidator(IValidator validator)
+    public void AddValidator(IValidator validator)
     {
-        if (validators.All(val => val.GetType() != validator.GetType()))
+        if (Validators.All(val => val.GetType() != validator.GetType()))
         {
-            validators.Add(validator);
+            Validators.Add(validator);
         }
     }
 
     public bool Validate()
     {
-        return validators.TrueForAll(validator => validator.Validate(cells));
+        return Validators.TrueForAll(validator => validator.Validate(Cells));
     }
 }

@@ -21,8 +21,8 @@ public abstract class BaseCellState : ICellState
         Context.HelperValue = helperValue;
     }
 
-    public override string ToString()
+    public virtual Cell.CellType GetCellType()
     {
-        return state;
+        return Cell.CellType.Empty;
     }
 }

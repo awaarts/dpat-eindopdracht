@@ -1,16 +1,14 @@
-using DPAT_eindopdracht.Domain.Cell.State;
-
 namespace DPAT_eindopdracht.Domain.Board;
 
 public class Board : IBoard
 {
     public Cell.Cell[][] Cells { get; private set; }
-    public List<Group.Group> Groups { get; private set; }
+    public List<Group.Group> Groups { get; }
 
     public Board()
     {
-        this.Cells = Array.Empty<Cell.Cell[]>();
-        this.Groups = new List<Group.Group>();
+        Cells = Array.Empty<Cell.Cell[]>();
+        Groups = new List<Group.Group>();
     }
 
     public void SetCells(Cell.Cell[][] cells)
@@ -33,8 +31,21 @@ public class Board : IBoard
         return Groups.All(group => group.Validate());
     }
 
-    public void UpdateCell(int x, int y, int newValue)
+    public void UpdateCell(int x, int y, int? newValue)
     {
-        Cells[y][x].FixedValue = newValue;
+        if (newValue != null)
+        {
+            Cells[y][x].FixedValue = newValue;
+            Cells[y][x].SetState(Validate() ? Cell.Cell.CellType.Correct : Cell.Cell.CellType.Incorrect);
+        }
+        else
+        {
+            Cells[y][x].SetState(Cell.Cell.CellType.Empty);
+        }
+    }
+    
+    public void UpdateHelperValue(int x, int y, int? newValue)
+    {
+        Cells[y][x].SetHelperValue(newValue);
     }
 }

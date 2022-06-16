@@ -1,40 +1,23 @@
-using System.Text.Json.Serialization;
 using DPAT_eindopdracht.Domain.Cell.State;
-using Microsoft.AspNetCore.Components.Server;
 
 namespace DPAT_eindopdracht.Domain.Cell;
 
 public class Cell
 {
+    public enum CellType
+    {
+        Empty,
+        Correct,
+        Incorrect,
+        Initial
+    }
     public ICellState CellState { get; private set; }
     public int? FixedValue { get; set; }
     public int? HelperValue { get; set; }
     
     public int x { get; set; }
     public int y { get; set; }
-    
-    //only used to properly initialise model from controller
-    public string? jsonState { get; }
 
-    [JsonConstructor]
-    public Cell(int? fixedValue, int? helperValue, string? jsonState)
-    {
-        if (jsonState != null)
-        {
-            SetState(jsonState);
-        }
-
-        if (fixedValue != null)
-        {
-            FixedValue = fixedValue;
-        }
-
-        if (helperValue != null)
-        {
-            HelperValue = helperValue;
-        }
-    }
-    
     public Cell(ICellState? state)
     {
         if (state != null)
@@ -49,17 +32,18 @@ public class Cell
     public Cell Clone()
     {
         Cell clone = new Cell(null);
-        clone.SetState(CellState.ToString());
+        clone.SetState(CellState.GetCellType());
         return clone;
     }
 
-    public void SetState(string state)
+    public void SetState(CellType state)
     {
         CellState = state switch
         {
-            "empty" => new EmptyCellState(this),
-            "correct" => new CorrectCellState(this),
-            "incorrect" => new IncorrectCellState(this),
+            CellType.Empty => new EmptyCellState(this),
+            CellType.Correct => new CorrectCellState(this),
+            CellType.Incorrect => new IncorrectCellState(this),
+            CellType.Initial => new InitialValueCellState(this),
             _ => CellState
         };
     }
@@ -67,7 +51,6 @@ public class Cell
     public void SetFixedValue(int? value)
     {
         CellState.SetFixedValue(value);
-        //set value through state, as this will allow us to check if we are not overriding correct values
     }
 
     public void SetHelperValue(int? value)

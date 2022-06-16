@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import { Cell } from 'src/app/models/cell.model';
 import { RegionCell } from 'src/app/models/region.cell.model';
 
@@ -11,8 +11,10 @@ import { RegionCell } from 'src/app/models/region.cell.model';
 })
 export class CellComponent implements OnInit {
 
-  @Input()
-  cell: Cell;
+  @Input() selectedFixedValue = true;
+  @Input() cell: Cell;
+
+  @Output() cellUpdated = new EventEmitter<string>();
 
   private http: HttpClient;
   private baseUrl: string;
@@ -26,12 +28,12 @@ export class CellComponent implements OnInit {
   }
 
   updateCell(): void {
-
     this.http.post<string>(
-      this.baseUrl + `api/game/cell?x=${this.cell.x}&y=${this.cell.y}&newValue=${this.cell.value}`,
+      this.baseUrl + `api/game/${
+        this.selectedFixedValue ? 'cell' : 'helpervalue'}?x=${this.cell.x}&y=${this.cell.y}&newValue=${this.cell.value ?? -1}`,
       {}
-    ).subscribe(() => {
-      return;
+    ).subscribe((result) => {
+      this.cellUpdated.emit(result)
     }, error => {
       console.log(error)
     });

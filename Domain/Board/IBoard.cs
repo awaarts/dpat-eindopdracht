@@ -18,5 +18,7 @@ public interface IBoard
      public void AddBoard(IBoard board);
      public bool Validate();
 
-     public void UpdateCell(int x, int y, int newValue);
+     public void UpdateCell(int x, int y, int? newValue);
+
+     public void UpdateHelperValue(int x, int y, int? newValue);
 }

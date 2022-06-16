@@ -6,4 +6,6 @@ public interface ICellState
     void SetFixedValue(int? value);
 
     void SetHelperValue(int? helperValue);
+
+    Cell.CellType GetCellType();
 }

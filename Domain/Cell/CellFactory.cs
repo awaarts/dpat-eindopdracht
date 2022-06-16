@@ -10,17 +10,20 @@ public class CellFactory
     public CellFactory()
     {
         Cell emptyCell = new Cell(null);
-        emptyCell.SetState("empty");
+        emptyCell.SetState(Cell.CellType.Empty);
         Cell incorrectCell = new Cell(null);
-        incorrectCell.SetState("incorrect");
+        incorrectCell.SetState(Cell.CellType.Incorrect);
         Cell correctCell = new Cell(null);
-        correctCell.SetState("correct");
+        correctCell.SetState(Cell.CellType.Correct);
+        Cell initialValueCell = new Cell(null);
+        initialValueCell.SetState(Cell.CellType.Initial);
         
         cellTypes = new Dictionary<string, Cell>()
         {
             {"empty", emptyCell},
             {"incorrect", incorrectCell},
-            {"correct", correctCell}
+            {"correct", correctCell},
+            {"initial", initialValueCell}
         };
     }
 

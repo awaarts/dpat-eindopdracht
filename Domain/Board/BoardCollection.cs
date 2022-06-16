@@ -34,8 +34,20 @@ public class BoardCollection : IBoard
         return Boards.All(board => board.Validate());
     }
 
-    public void UpdateCell(int x, int y, int newValue)
+    public void UpdateCell(int x, int y, int? newValue)
     {
-        throw new NotImplementedException();
+        if (newValue != null)
+        {
+            Cells[y][x].FixedValue = newValue;
+            Cells[y][x].SetState(Validate() ? Cell.Cell.CellType.Correct : Cell.Cell.CellType.Incorrect);
+        }
+        else
+        {
+            Cells[y][x].SetState(Cell.Cell.CellType.Empty);
+        }
+    }
+    public void UpdateHelperValue(int x, int y, int? newValue)
+    {
+        Cells[y][x].SetHelperValue(newValue);
     }
 }

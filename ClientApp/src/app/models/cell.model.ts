@@ -1,13 +1,13 @@
 class Cell {
-  constructor(value?: number, notes? : number[], state?: string, x?: number, y?: number) {
+  constructor(value?: number, helperValues? : number[], state?: string, x?: number, y?: number) {
     this.value = value;
-    this.notes = notes;
+    this.helperValues = helperValues;
     this.state = state;
     this.x = x;
     this.y = y;
   }
   public value? : number;
-  notes? : number[];
+  helperValues? : number[];
   state? : string = 'empty';
   x? : number;
   y? : number;

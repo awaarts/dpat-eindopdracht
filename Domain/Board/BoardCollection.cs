@@ -33,4 +33,9 @@ public class BoardCollection : IBoard
     {
         return Boards.All(board => board.Validate());
     }
+
+    public void UpdateCell(int x, int y, int newValue)
+    {
+        throw new NotImplementedException();
+    }
 }

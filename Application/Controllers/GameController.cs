@@ -16,7 +16,6 @@ public class GameController : ControllerBase
     private ImportService _importService;
     private BoardJsonService _boardJsonService;
     private string[] _acceptedFileExtensions;
-    private IBoard _board;
 
     public GameController()
     {
@@ -33,7 +32,7 @@ public class GameController : ControllerBase
         if (file != null && _acceptedFileExtensions.Contains(Path.GetExtension(file.FileName).ToLower()))
         {
             IBoard board = ImportFile(file);
-            _board = board;
+            BoardRepository.SetBoard(board);
             return board;
         }
         
@@ -43,7 +42,7 @@ public class GameController : ControllerBase
     [HttpGet]
     public IBoard LoadGame()
     {
-        return this._board; 
+        return BoardRepository.GetBoard();
     }
 
     private IBoard ImportFile(IFormFile file)
@@ -58,20 +57,20 @@ public class GameController : ControllerBase
         return _sudokuSolverService.SolveSudoku(board);
     }
     
-    [HttpPost, Route("board/check")]
-    public IBoard CheckSudoku(IBoard board)
+    [HttpGet, Route("board/check")]
+    public bool CheckSudoku()
     {
-        IBoard oldBoard = board;
-        IBoard correctBoard = _sudokuSolverService.SolveSudoku(board);
-        
-        //TODO: compare two boards and update the given cells to either correct or incorrect states
-        throw new NotImplementedException();
+        return BoardRepository.GetBoard().Validate();
     }
 
     [HttpPost, Route("cell")]
-    public Cell? UpdateCell([FromBody] Cell cell)
+    public IBoard UpdateCell(int x, int y, int newValue)
     {
-        // return cell;
-        return cell;
+        IBoard board = BoardRepository.GetBoard();
+        
+        board.UpdateCell(x,y,newValue);
+        BoardRepository.SetBoard(board);
+
+        return board;
     }
 }

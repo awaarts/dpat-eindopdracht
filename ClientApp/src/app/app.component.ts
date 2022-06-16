@@ -37,11 +37,15 @@ export class AppComponent {
           fixedValue: number;
           helperValue: number;
           cellState: { state: string; };
+          x: number;
+          y: number;
         }) => {
           return new Cell(
             cell.fixedValue,
             [cell.helperValue],
-            cell.cellState?.state
+            cell.cellState?.state,
+            cell.x,
+            cell.y,
           );
         })
       );

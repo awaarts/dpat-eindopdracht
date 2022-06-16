@@ -1,3 +1,5 @@
+using DPAT_eindopdracht.Domain.Cell.State;
+
 namespace DPAT_eindopdracht.Domain.Board;
 
 public class Board : IBoard
@@ -29,5 +31,10 @@ public class Board : IBoard
     public bool Validate()
     {
         return Groups.All(group => group.Validate());
+    }
+
+    public void UpdateCell(int x, int y, int newValue)
+    {
+        Cells[y][x].FixedValue = newValue;
     }
 }

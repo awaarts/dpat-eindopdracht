@@ -1,5 +1,6 @@
 <div class="cell" [ngClass]="{'correct' : cell.state === 'correct'}">
 	<div class="notes"><span *ngFor="let note of cell.notes">{{ note }}</span></div>
-	<input *ngIf="cell.state !== 'correct'" value=" {{cell.value}}" type="number" min="0" max="9" />
+	<input *ngIf="cell.state !== 'correct'" [(ngModel)]="cell.value" type="number" min="0" max="9" (ngModelChange)="updateCell()" />
+
 	<span *ngIf="cell.state === 'correct'">{{cell.value}}</span>
 </div>

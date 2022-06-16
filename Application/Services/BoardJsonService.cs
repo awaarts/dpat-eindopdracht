@@ -33,7 +33,7 @@ public class BoardJsonService
                     }
                 }
             }
-            regions.Append(newGroup);
+            regions.Add(newGroup);
         }
 
         return JsonConvert.SerializeObject(regions);

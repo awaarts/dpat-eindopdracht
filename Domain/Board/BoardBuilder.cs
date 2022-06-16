@@ -144,9 +144,9 @@ public class BoardBuilder
     
     public void Create6x6RegionGroups(string validator)
     {
-        var columns = 3;
-        var rows = 2;
-        CreateRegions(validator,columns,rows);
+        var columns = 2;
+        var rows = 3;
+        CreateRegions(validator,rows,columns);
     }
     public void Create9x9RegionGroups(string validator)
     {

@@ -36,21 +36,15 @@ export class AppComponent {
   newBoardLoaded(board: any) {
     this.board.cells = board.cells.map(
         (row: Array<any>) => row.map(
-        (cell: {
-          fixedValue: number;
-          helperValue: number;
-          cellState: { state: string; };
-          x: number;
-          y: number;
-        }) => {
-          return new Cell(
+        (cell) => { return cell ?
+          new Cell(
             cell.fixedValue,
             [cell.helperValue],
             cell.cellState?.state,
             cell.x,
             cell.y,
-          );
-        })
+          )
+         : null})
       );
 
     let regions = board.groups.filter((group: any) => group.type == "region");

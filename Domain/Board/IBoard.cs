@@ -11,6 +11,8 @@ public interface IBoard
      {
          get;
      }
+     
+     List<IBoard> Boards { get;  }
 
      public void SetCells(Cell.Cell[][] cells);
      public void AddGroup(Group.Group group);

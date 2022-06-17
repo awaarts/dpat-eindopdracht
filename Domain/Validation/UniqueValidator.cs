@@ -3,7 +3,7 @@ namespace DPAT_eindopdracht.Domain.Validation;
 public class UniqueValidator : IValidator
 {
     public bool Validate(List<Cell.Cell> cells)
-    {
+    { 
         var numbersPresent = new List<int>();
         var isValid = true;  
         cells.ForEach(cell =>

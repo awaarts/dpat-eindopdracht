@@ -10,7 +10,11 @@ public class SudokuAlgorithm : ISudokuAlgorithm
         //if it is a collection of boards, we will have to go deeper
         if (typeof(BoardCollection) == board.GetType())
         {
-            //TODO: handle samurai
+            for (int i = 0; i > board.Boards.Count; i++)
+            {
+                board.Boards[i] = SolveSudoku(board.Boards[i]);
+            }
+
             return board;
         }
         if (board.GetType() == typeof(Board))
@@ -60,7 +64,12 @@ public class SudokuAlgorithm : ISudokuAlgorithm
         {
             for (var x = 0; x < board.Cells[y].Length; x++)
             {
-                if (board.Cells[y][x].CellState.GetCellType() == Cell.CellType.Empty)
+                Cell cell = board.Cells[y][x];
+                if (cell == null)
+                {
+                    break;
+                }
+                if (cell.CellState.GetCellType() == Cell.CellType.Empty)
                 {
                     return board.Cells[y][x];
                 }

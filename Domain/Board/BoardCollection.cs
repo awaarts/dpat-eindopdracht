@@ -5,7 +5,7 @@ public class BoardCollection : IBoard
     public Cell.Cell[][] Cells { get; set; }
     public List<Group.Group> Groups { get; }
 
-    List<IBoard> Boards { get; set; }
+    public List<IBoard> Boards { get; }
 
     public BoardCollection()
     {

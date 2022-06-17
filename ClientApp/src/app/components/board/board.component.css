@@ -1,5 +1,6 @@
 .board {
   border-collapse: collapse;
+  border-spacing: 0;
 }
 
 .board tr td {

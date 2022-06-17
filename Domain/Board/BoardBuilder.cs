@@ -1,3 +1,4 @@
+using Castle.DynamicProxy.Generators;
 using DPAT_eindopdracht.Domain.Cell;
 using DPAT_eindopdracht.Domain.Group;
 
@@ -178,6 +179,55 @@ public class BoardBuilder
         }
         AddGroup(groupType, cells, "region");
     }
+    
+    private void CreateSamuraiRegions(Board[] boards)
+    {
+        foreach (Board board in boards)
+        {
+            foreach (Group.Group group in board.Groups)
+            {
+                _board.Groups.Add(group);
+            }
+        }
+    }
+
+    private void CreateSamuraiCells(Board[] boards)
+    {
+        Dictionary<int, int> boardOffsetsX = new Dictionary<int, int>()
+        {
+            { 0, 0 },
+            { 1, 12 },
+            { 2, 6 },
+            { 3, 0 },
+            { 4, 12 }
+        };
+        Dictionary<int, int> boardOffsetY = new Dictionary<int, int>()
+        {
+            { 0, 0 },
+            { 1, 0 },
+            { 2, 6 },
+            { 3, 12 },
+            { 4, 12 }
+        };
+
+
+        for (int i = 0; i < boards.Length; i++)
+        {
+            Board board = boards[i];
+            for (int y = 0; y < board.Cells.Length; y++)
+            {
+                Cell.Cell[] col = board.Cells[y];
+                for (int x = 0; x < col.Length; x++)
+                {
+                    Cell.Cell cell = board.Cells[y][x];
+                    _board.Cells[y + boardOffsetY[i]][x + boardOffsetsX[i]] = cell;
+                    cell.y = y + boardOffsetY[i];
+                    cell.x = x + boardOffsetsX[i];
+                }
+
+            }
+        }
+    }
 
     public void Prepare4X4(int[][] cellValues)
     {
@@ -236,5 +286,8 @@ public class BoardBuilder
             boards[i] = (Board) boardBuilder.GetBoard();
             _board.AddBoard(boards[i]);
         }
+        CreateBoard(21, 21);
+        CreateSamuraiCells(boards);
+        CreateSamuraiRegions(boards);
     }
 }

@@ -5,32 +5,34 @@ namespace DPAT_eindopdracht.Application.Algorithms;
 
 public class SudokuAlgorithm : ISudokuAlgorithm
 {
-    public IBoard SolveSudoku(IBoard board)
+    public IBoard SolveSudoku(IBoard board, int? maxLength)
     {
         //if it is a collection of boards, we will have to go deeper
         if (typeof(BoardCollection) == board.GetType())
         {
-            for (int i = 0; i > board.Boards.Count; i++)
+            var maxNumber = board.Boards.Count > 0 ? board.Boards[0].Cells.Length : 0;
+            Console.WriteLine(board.Boards.Count);
+            for (var i = 0; i > board.Boards.Count; i++)
             {
-                board.Boards[i] = SolveSudoku(board.Boards[i]);
+                board.Boards[i] = SolveSudoku(board.Boards[i], maxNumber);
             }
 
             return board;
         }
         if (board.GetType() == typeof(Board))
         {
-            return SolveBoard((Board) board);
+            return SolveBoard((Board)board, maxLength);
         }
 
         return board;
     }
 
-    private Board SolveBoard(Board board)
+    private Board SolveBoard(Board board, int? maxNumber)
     {
-        return FindCellOnBoard(board) ?? board;
+        return FindCellOnBoard(board, maxNumber ?? board.Cells.Length) ?? board;
     }
 
-    private Board? FindCellOnBoard(Board board)
+    private Board? FindCellOnBoard(Board board, int maxNumber)
     {
         Cell? targetCell = FindEmptyCell(board);
 
@@ -40,12 +42,12 @@ public class SudokuAlgorithm : ISudokuAlgorithm
         }
         
         //try to fill the target cell with 1 - max (Length of cell array is max number), if not possible, return null
-        for (var value = 1; value <= board.Cells.Length; value++)
+        for (var value = 1; value <= maxNumber; value++)
         {
             board.UpdateCell(targetCell.x, targetCell.y, value);
             if (targetCell.CellState.GetCellType() == Cell.CellType.Correct)
             {
-                var result = FindCellOnBoard(board);
+                var result = FindCellOnBoard(board, maxNumber);
                 if (result != null)
                 {
                     return board;

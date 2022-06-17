@@ -4,5 +4,5 @@ namespace DPAT_eindopdracht.Application.Algorithms;
 
 public interface ISudokuAlgorithm
 {
-    public IBoard SolveSudoku(IBoard board);
+    public IBoard SolveSudoku(IBoard board, int? maxNumber);
 }

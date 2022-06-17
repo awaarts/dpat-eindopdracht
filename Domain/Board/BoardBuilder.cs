@@ -31,6 +31,18 @@ public class BoardBuilder
 
         _board.SetCells(cells);
     }
+    
+    public void CreateBoardCollection(int width, int length)
+    {
+        _board = new BoardCollection();
+        Cell.Cell[][] cells = new Cell.Cell[length][];
+        for (int i = 0; i < length; i++)
+        {
+            cells[i] = new Cell.Cell[width];
+        }
+
+        _board.SetCells(cells);
+    }
 
     public IBoard GetBoard()
     {
@@ -277,16 +289,16 @@ public class BoardBuilder
 
     public void PrepareSamurai(int[][][] boardCells)
     {
+        CreateBoardCollection(21, 21);
         BoardBuilder boardBuilder = new BoardBuilder();
         Board[] boards = new Board[5];
-        _board = new BoardCollection();
-        for (int i = 0; i < boardCells.Length; i++)
+        for (var i = 0; i < boardCells.Length; i++)
         {
+            boardBuilder.CreateBoard(9, 9);
             boardBuilder.Prepare9X9(boardCells[i]);
             boards[i] = (Board) boardBuilder.GetBoard();
             _board.AddBoard(boards[i]);
         }
-        CreateBoard(21, 21);
         CreateSamuraiCells(boards);
         CreateSamuraiRegions(boards);
     }

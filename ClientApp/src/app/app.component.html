@@ -1,23 +1,13 @@
-<app-menu (newBoardLoaded)="newBoardLoaded($event)" ></app-menu>
-<div class="d-flex justify-content-center align-items-center h-100 flex-column">
-  <div *ngIf="board.cells.length" class="d-flex justify-content-between mb-3">
-    <button
-      (click)="selectedFixedValue = true"
-      [ngClass]="{'selectedButton' : selectedFixedValue}"
-    >
-      Normal Value
-    </button>
-    <button
-      (click)="selectedFixedValue = false"
-      [ngClass]="{'selectedButton' : !selectedFixedValue}"
-    >
-      Helper Value
-    </button>
-  </div>
-	<app-board
-    (boardUpdated)="newBoardLoaded($event)"
-    [board]="board"
-    [selectedFixedValue]="selectedFixedValue"
-  ></app-board>
+<app-menu (newBoardLoaded)="newBoardLoaded($event)"></app-menu>
+<div class="d-flex justify-content-center align-items-center h-100 flex-column main">
+	<div *ngIf="board.cells.length" class="d-flex justify-content-between mb-3">
+		<button (click)="selectedFixedValue = true" [ngClass]="{'selectedButton' : selectedFixedValue}" class="btn">
+			Normal Value
+		</button>
+		<button (click)="selectedFixedValue = false" [ngClass]="{'selectedButton' : !selectedFixedValue}" class="btn">
+			Helper Value
+		</button>
+	</div>
+	<app-board (boardUpdated)="newBoardLoaded($event)" [board]="board" [selectedFixedValue]="selectedFixedValue"></app-board>
 
 </div>

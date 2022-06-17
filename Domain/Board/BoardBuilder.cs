@@ -205,7 +205,7 @@ public class BoardBuilder
 
     private void CreateSamuraiCells(Board[] boards)
     {
-        Dictionary<int, int> boardOffsetsX = new Dictionary<int, int>()
+        Dictionary<int, int> boardOffsetX = new Dictionary<int, int>()
         {
             { 0, 0 },
             { 1, 12 },
@@ -226,15 +226,17 @@ public class BoardBuilder
         for (int i = 0; i < boards.Length; i++)
         {
             Board board = boards[i];
+            board.offsetX = boardOffsetX[i];
+            board.offsetY = boardOffsetY[i];
             for (int y = 0; y < board.Cells.Length; y++)
             {
                 Cell.Cell[] col = board.Cells[y];
                 for (int x = 0; x < col.Length; x++)
                 {
                     Cell.Cell cell = board.Cells[y][x];
-                    _board.Cells[y + boardOffsetY[i]][x + boardOffsetsX[i]] = cell;
+                    _board.Cells[y + boardOffsetY[i]][x + boardOffsetX[i]] = cell;
                     cell.y = y + boardOffsetY[i];
-                    cell.x = x + boardOffsetsX[i];
+                    cell.x = x + boardOffsetX[i];
                 }
 
             }
@@ -290,10 +292,10 @@ public class BoardBuilder
     public void PrepareSamurai(int[][][] boardCells)
     {
         CreateBoardCollection(21, 21);
-        BoardBuilder boardBuilder = new BoardBuilder();
         Board[] boards = new Board[5];
         for (var i = 0; i < boardCells.Length; i++)
         {
+            BoardBuilder boardBuilder = new BoardBuilder();
             boardBuilder.CreateBoard(9, 9);
             boardBuilder.Prepare9X9(boardCells[i]);
             boards[i] = (Board) boardBuilder.GetBoard();

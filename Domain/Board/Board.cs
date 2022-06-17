@@ -4,7 +4,10 @@ public class Board : IBoard
 {
     public Cell.Cell[][] Cells { get; private set; }
     public List<Group.Group> Groups { get; }
-    public List<IBoard> Boards { get; }
+    public List<IBoard> Boards { get; set; }
+    
+    public int offsetX { get; set; }
+    public int offsetY { get; set; }
 
     public Board()
     {

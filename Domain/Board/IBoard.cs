@@ -12,7 +12,7 @@ public interface IBoard
          get;
      }
      
-     List<IBoard> Boards { get;  }
+     List<IBoard> Boards { get; set; }
 
      public void SetCells(Cell.Cell[][] cells);
      public void AddGroup(Group.Group group);

@@ -10,14 +10,18 @@ public class SudokuAlgorithm : ISudokuAlgorithm
         //if it is a collection of boards, we will have to go deeper
         if (typeof(BoardCollection) == board.GetType())
         {
-            var maxNumber = board.Boards.Count > 0 ? board.Boards[0].Cells.Length : 0;
-            Console.WriteLine(board.Boards.Count);
-            for (var i = 0; i > board.Boards.Count; i++)
+            var maxNumberMiddle = board.Boards[2].Cells.Length > 0 ? board.Boards[2].Cells.Length : 0;
+            board.Boards[2] = SolveSudoku(board.Boards[2], maxNumberMiddle);
+            for (var i = board.Boards.Count - 1; i >= 0 ; i--)
             {
-                board.Boards[i] = SolveSudoku(board.Boards[i], maxNumber);
+                if (i != 2)
+                {
+                    var maxNumber = board.Boards[i].Cells.Length > 0 ? board.Boards[i].Cells.Length : 0;
+                    board.Boards[i] = SolveSudoku(board.Boards[i], maxNumber);
+                }
             }
-
-            return board;
+            
+            
         }
         if (board.GetType() == typeof(Board))
         {
@@ -44,7 +48,7 @@ public class SudokuAlgorithm : ISudokuAlgorithm
         //try to fill the target cell with 1 - max (Length of cell array is max number), if not possible, return null
         for (var value = 1; value <= maxNumber; value++)
         {
-            board.UpdateCell(targetCell.x, targetCell.y, value);
+            board.UpdateCell(targetCell.x - board.offsetX, targetCell.y - board.offsetY, value);
             if (targetCell.CellState.GetCellType() == Cell.CellType.Correct)
             {
                 var result = FindCellOnBoard(board, maxNumber);
@@ -56,7 +60,7 @@ public class SudokuAlgorithm : ISudokuAlgorithm
         }
 
         //reset our attempt
-        board.UpdateCell(targetCell.x, targetCell.y, null);
+        board.UpdateCell(targetCell.x - board.offsetX, targetCell.y - board.offsetY, null);
         return null;
     }
 
@@ -67,10 +71,6 @@ public class SudokuAlgorithm : ISudokuAlgorithm
             for (var x = 0; x < board.Cells[y].Length; x++)
             {
                 Cell cell = board.Cells[y][x];
-                if (cell == null)
-                {
-                    break;
-                }
                 if (cell.CellState.GetCellType() == Cell.CellType.Empty)
                 {
                     return board.Cells[y][x];

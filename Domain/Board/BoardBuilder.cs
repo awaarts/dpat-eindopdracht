@@ -16,7 +16,7 @@ public class BoardBuilder
         _cellFactory = new CellFactory();
         _groupFactory = new GroupFactory();
         
-        //factory inits
+        RegisterCells();
         _groupFactory.AddGroupType(typeof(UniqueGroup), Group.Group.GroupTypes.Unique);
     }
     
@@ -42,6 +42,25 @@ public class BoardBuilder
         }
 
         _board.SetCells(cells);
+    }
+    
+    private void RegisterCells()
+    {
+        Cell.Cell emptyCell = new Cell.Cell(null);
+        emptyCell.SetState(Cell.Cell.CellType.Empty);
+        _cellFactory.RegisterCell("empty", emptyCell);
+        
+        Cell.Cell incorrectCell = new Cell.Cell(null);
+        incorrectCell.SetState(Cell.Cell.CellType.Incorrect);
+        _cellFactory.RegisterCell("incorrect", incorrectCell);
+        
+        Cell.Cell correctCell = new Cell.Cell(null);
+        correctCell.SetState(Cell.Cell.CellType.Correct);
+        _cellFactory.RegisterCell("correct", correctCell);
+        
+        Cell.Cell initialValueCell = new Cell.Cell(null);
+        initialValueCell.SetState(Cell.Cell.CellType.Initial);
+        _cellFactory.RegisterCell("initial", initialValueCell);
     }
 
     public IBoard GetBoard()
@@ -70,7 +89,7 @@ public class BoardBuilder
         _board = newBoard;
     }
     
-    private void CreateCells(int[][] cellValues)
+    public void CreateCells(int[][] cellValues)
     {
         for (var y = 0; y < cellValues.Length; y++)
         {

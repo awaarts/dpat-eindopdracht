@@ -122,7 +122,7 @@ public class BoardTest
         var boardBuilder = new BoardBuilder();
         var cells = CreateSamuraiTestCellsForPrepare(9, 9);
 
-        boardBuilder.PrepareSamurai(cells, cells[0]);
+        boardBuilder.PrepareSamurai(cells);
         var board = boardBuilder.GetBoard();
         
         Assert.IsType<BoardCollection>(board);

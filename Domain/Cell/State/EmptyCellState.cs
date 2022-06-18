@@ -4,14 +4,7 @@ public class EmptyCellState : BaseCellState
 {
     public EmptyCellState(Cell context) : base(context)
     {
-    }
-
-    public override void SetFixedValue(int? value)
-    {
-        if (value > 0)
-        {
-            base.SetFixedValue(value);
-        }
+        Context.FixedValue = null;
     }
 
     public override void SetHelperValue(int? helperValue)

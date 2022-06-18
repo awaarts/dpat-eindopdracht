@@ -9,19 +9,8 @@ public class CellFactory
 
     public CellFactory()
     {
-        Cell emptyCell = new Cell(null);
-        emptyCell.SetState("empty");
-        Cell incorrectCell = new Cell(null);
-        incorrectCell.SetState("incorrect");
-        Cell correctCell = new Cell(null);
-        correctCell.SetState("correct");
-        
-        cellTypes = new Dictionary<string, Cell>()
-        {
-            {"empty", emptyCell},
-            {"incorrect", incorrectCell},
-            {"correct", correctCell}
-        };
+
+        cellTypes = new Dictionary<string, Cell>();
     }
 
     public void RegisterCell(string name, Cell cell)

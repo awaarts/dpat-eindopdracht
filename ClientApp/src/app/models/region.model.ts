@@ -14,8 +14,6 @@ class Region {
     let minY = Math.min(...this.cells.map(cell => cell.y));
     let maxY = Math.max(...this.cells.map(cell => cell.y));
 
-    console.log(maxX, minX, minY, maxY)
-
     for(let row = minY; row <= maxY; row++ ) {
 
       let cells = this.cells.filter(cell => cell.y == row)

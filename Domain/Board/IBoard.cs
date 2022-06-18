@@ -7,5 +7,20 @@ public interface IBoard
           get;
      }
 
+     List<Group.Group> Groups
+     {
+         get;
+     }
+     
+     List<IBoard> Boards { get; set; }
+
+     public void SetCells(Cell.Cell[][] cells);
+     public void AddGroup(Group.Group group);
+
+     public void AddBoard(IBoard board);
      public bool Validate();
+
+     public void UpdateCell(int x, int y, int? newValue);
+
+     public void UpdateHelperValue(int x, int y, int? newValue);
 }

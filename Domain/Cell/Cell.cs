@@ -1,45 +1,49 @@
 using DPAT_eindopdracht.Domain.Cell.State;
-using Microsoft.AspNetCore.Components.Server;
 
 namespace DPAT_eindopdracht.Domain.Cell;
 
 public class Cell
 {
+    public enum CellType
+    {
+        Empty,
+        Correct,
+        Incorrect,
+        Initial
+    }
     public ICellState CellState { get; private set; }
     public int? FixedValue { get; set; }
     public int? HelperValue { get; set; }
+    
+    public int x { get; set; }
+    public int y { get; set; }
+
 
     public Cell(ICellState? state)
     {
-        if (state != null)
-        {
-            CellState = state;
-        }
-        else
-        {
-            CellState = new EmptyCellState(this);
-        }
+        CellState = state ?? new EmptyCellState(this);
     }
     public Cell Clone()
     {
-        return new Cell(CellState);
+        Cell clone = new Cell(null);
+        clone.SetState(CellState.GetCellType());
+        return clone;
     }
 
-    public void SetState(string state)
+    public void SetState(CellType state)
     {
         CellState = state switch
         {
-            "empty" => new EmptyCellState(this),
-            "correct" => new CorrectCellState(this),
-            "incorrect" => new IncorrectCellState(this),
-            _ => CellState
+            CellType.Empty => new EmptyCellState(this),
+            CellType.Correct => new CorrectCellState(this),
+            CellType.Incorrect => new IncorrectCellState(this),
+            CellType.Initial => new InitialValueCellState(this)
         };
     }
 
     public void SetFixedValue(int? value)
     {
         CellState.SetFixedValue(value);
-        //set value through state, as this will allow us to check if we are not overriding correct values
     }
 
     public void SetHelperValue(int? value)

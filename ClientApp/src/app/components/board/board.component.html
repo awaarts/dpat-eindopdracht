@@ -1,7 +1,13 @@
 <table class="board">
 	<tr *ngFor="let row of board.cells; let y = index">
-		<td *ngFor="let cell of row; let x = index" [ngClass]="{'borderTop' : board.getRegionCell(x,y).topBorder, 'borderLeft' : board.getRegionCell(x,y).leftBorder,'borderBottom' : board.getRegionCell(x,y).bottomBorder,'borderRight' : board.getRegionCell(x,y).rightBorder, 'noCell' : !cell }">
-			<app-cell *ngIf="cell" [cell]="cell"></app-cell>
+		<td *ngFor="let cell of row; let x = index" [ngClass]="{
+      'initial' : board.cells[y][x] ?  board.cells[y][x].state === 'initial' : false,
+      'borderTop' : board.getRegionCell(x,y) ? board.getRegionCell(x,y).topBorder : null,
+      'borderLeft' : board.getRegionCell(x,y) ?board.getRegionCell(x,y).leftBorder : null,
+      'borderBottom' : board.getRegionCell(x,y) ?board.getRegionCell(x,y).bottomBorder : null,
+      'borderRight' : board.getRegionCell(x,y) ?board.getRegionCell(x,y).rightBorder : null,
+      'noCell' : !cell }">
+			<app-cell (cellUpdated)="updateBoard($event)" *ngIf="cell" [cell]="cell" [selectedFixedValue]="selectedFixedValue"></app-cell>
 		</td>
 	</tr>
 </table>

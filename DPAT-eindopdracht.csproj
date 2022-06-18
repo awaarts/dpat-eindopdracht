@@ -13,6 +13,13 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.5" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta1" />
+        <PackageReference Include="NSubstitute" Version="4.3.0" />
+        <PackageReference Include="xunit" Version="2.4.2-pre.12" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
@@ -23,7 +30,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Domain\Group" />
+      <Folder Include="Data" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="TestProject1\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="TestProject1\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="TestProject1\obj\TestProject1.csproj.nuget.dgspec.json" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

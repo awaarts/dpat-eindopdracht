@@ -14,6 +14,6 @@ public class SudokuSolverService
 
     public IBoard SolveSudoku(IBoard board)
     {
-        return algorithm.SolveSudoku(board);
+        return algorithm.SolveSudoku(board, null);
     }
 }

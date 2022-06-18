@@ -2,10 +2,8 @@ namespace DPAT_eindopdracht.Domain.Cell.State;
 
 public class EmptyCellState : BaseCellState
 {
-    public override string state { get;  }
     public EmptyCellState(Cell context) : base(context)
     {
-        state = "empty";
         Context.FixedValue = null;
     }
 

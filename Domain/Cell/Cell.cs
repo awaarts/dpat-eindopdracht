@@ -21,14 +21,7 @@ public class Cell
 
     public Cell(ICellState? state)
     {
-        if (state != null)
-        {
-            CellState = state;
-        }
-        else
-        {
-            CellState = new EmptyCellState(this);
-        }
+        CellState = state ?? new EmptyCellState(this);
     }
     public Cell Clone()
     {
@@ -44,8 +37,7 @@ public class Cell
             CellType.Empty => new EmptyCellState(this),
             CellType.Correct => new CorrectCellState(this),
             CellType.Incorrect => new IncorrectCellState(this),
-            CellType.Initial => new InitialValueCellState(this),
-            _ => CellState
+            CellType.Initial => new InitialValueCellState(this)
         };
     }
 

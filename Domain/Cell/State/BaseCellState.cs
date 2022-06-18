@@ -7,7 +7,7 @@ public abstract class BaseCellState : ICellState
     
     public BaseCellState(Cell context)
     {
-        state = "";
+        state = "empty";
         Context = context;
     }
     

@@ -17,7 +17,7 @@ public class Group
     {
         Type = "";
         Validators = new List<IValidator>();
-        this.Cells = cells;
+        Cells = cells;
     }
 
     public void AddValidator(IValidator validator)

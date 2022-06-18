@@ -15,56 +15,48 @@ public class GroupTest
     {
         var factory = new GroupFactory();
         factory.AddGroupType(typeof(Group), Group.GroupTypes.Unique);
-        
+
         var group = factory.CreateGroup(Group.GroupTypes.Unique, new List<Cell>(), "test");
-        
-        Assert.NotNull(group);
-        Assert.Empty(group.Validators);
+
+        Assert.Empty(group!.Validators);
     }
     
     [Fact]
     public void CanCreatePresetGroupWithValidation()
     {
-        var factory = new GroupFactory();
-        factory.AddGroupType(typeof(UniqueGroup), Group.GroupTypes.Unique);
+        var factory = SetFactory();
         
-        var group = factory.CreateGroup(Group.GroupTypes.Unique, new List<Cell>(), "test");
+        var group = CreateTestGroup(factory);
         
-        Assert.NotNull(group);
         Assert.NotEmpty(group.Validators);
     }
     
     [Fact]
     public void GroupAlwaysHasCells()
     {
-        var factory = new GroupFactory();
-        factory.AddGroupType(typeof(UniqueGroup), Group.GroupTypes.Unique);
+        var factory = SetFactory();
         
-        var group = factory.CreateGroup(Group.GroupTypes.Unique, new List<Cell>(), "test");
+        var group = CreateTestGroup(factory);
         
-        Assert.NotNull(group);
         Assert.NotNull(group.Cells);
     }
     
     [Fact]
     public void GroupTypeIsSet()
     {
-        var factory = new GroupFactory();
-        factory.AddGroupType(typeof(UniqueGroup), Group.GroupTypes.Unique);
+        var factory = SetFactory();
         
-        var group = factory.CreateGroup(Group.GroupTypes.Unique, new List<Cell>(), "test");
+        var group = CreateTestGroup(factory);
         
-        Assert.NotNull(group);
         Assert.NotNull(group.Type);
     }
     
     [Fact]
     public void GroupCanValidate()
     {
-        var factory = new GroupFactory();
-        factory.AddGroupType(typeof(UniqueGroup), Group.GroupTypes.Unique);
-        
-        var group = factory.CreateGroup(Group.GroupTypes.Unique, new List<Cell>(), "test");
+        var factory = SetFactory();
+
+        var group = CreateTestGroup(factory);
         var validationResult = group.Validate();
         
         
@@ -87,14 +79,27 @@ public class GroupTest
     [Fact]
     public void CanAddGenericValidator()
     {
-        var factory = new GroupFactory();
-        factory.AddGroupType(typeof(UniqueGroup), Group.GroupTypes.Unique);
-        
-        var group = factory.CreateGroup(Group.GroupTypes.Unique, new List<Cell>(), "test");
+        var factory = SetFactory();
+
+        var group = CreateTestGroup(factory);
         var validator = Substitute.For<IValidator>();
         group.AddValidator(validator);
         
         Assert.NotNull(group);
-        Assert.Equal(group.Validators.Count, 2);
+        Assert.Equal(2, group.Validators.Count);
+    }
+
+    private GroupFactory SetFactory()
+    {
+        var factory = new GroupFactory();
+        factory.AddGroupType(typeof(UniqueGroup), Group.GroupTypes.Unique);
+        return factory;
+    }
+
+    private Group CreateTestGroup(GroupFactory factory)
+    {
+        return factory.CreateGroup(
+            Group.GroupTypes.Unique, new List<Cell>(), "test") ?? new Group(new List<Cell>()
+        );
     }
 }
